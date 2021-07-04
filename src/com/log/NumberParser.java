@@ -23,44 +23,62 @@ public class NumberParser {
         if (!dialedNumber.contains("+")) {
             final StringBuilder intNatDNumberBuilder = new StringBuilder();
             countryCodes.forEach((key, value) -> {
-                IntStream stream = userNumber.substring(1,5).chars();
+                IntStream stream = userNumber.substring(1, 5).chars();
                 StringBuilder builder = new StringBuilder();
                 stream.forEach(i -> {
-                    if(builder.append(Character.toChars(i)).toString().equals(value.toString())) {
+                    if (builder.append(Character.toChars(i)).toString().equals(value.toString())) {
                         Optional<String> prefixValue = prefixes.entrySet().stream()
                                 .filter(entry -> Objects.equals(entry.getKey(), key))
                                 .map(Map.Entry::getValue).findFirst();
 
                         if (prefixValue.isPresent()) {
-                            String intNatDialledNumber=dialedNumber.replaceFirst(prefixValue.get(), "");
-                            intNatDNumberBuilder.append("+"+value.toString()+intNatDialledNumber);
+                            String intNatDialledNumber = dialedNumber.replaceFirst(prefixValue.get(), "");
+                            intNatDNumberBuilder.append("+" + value.toString() + intNatDialledNumber);
                         }
                     }
                 });
             });
             return intNatDNumberBuilder.toString();
-        }
-        else
+        } else
             return dialedNumber;
     }
 
 
-    public String parsed(String dialedNumber, String userNumber) {
+    public String parse2(String dialedNumber, String userNumber) {
 
         if (!dialedNumber.contains("+")) {
             final StringBuilder number = new StringBuilder();
-            for(Map.Entry<String,String> entry : prefixes.entrySet()) {
+            for (Map.Entry<String, String> entry : prefixes.entrySet()) {
                 final String prefix = entry.getValue();
                 final int size = prefix.length();
-                if (prefix.equals(dialedNumber.substring(0,size))){
+                if (prefix.equals(dialedNumber.substring(0, size))) {
                     final String key = entry.getKey();
                     final String countryCode = countryCodes.get(key).toString();
                     number.append("+").append(countryCode).append(dialedNumber.substring(size));
                 }
             }
             return number.toString();
-        }
-        else
+        } else
+            return dialedNumber;
+    }
+
+
+    public String parse3(String dialedNumber, String userNumber) {
+
+        if (!dialedNumber.contains("+")) {
+            final StringBuilder number = new StringBuilder();
+            for (Map.Entry<String, Integer> entry : countryCodes.entrySet()) {
+                final String countryCode = entry.getValue().toString();
+                final int size = countryCode.length();
+                if (countryCode.equals(userNumber.substring(1, size + 1))) {
+                    final String key = entry.getKey();
+                    final String prefix = prefixes.get(key);
+                    dialedNumber = dialedNumber.substring(prefix.length());
+                    number.append("+").append(countryCode).append(dialedNumber);
+                }
+            }
+            return number.toString();
+        } else
             return dialedNumber;
     }
 

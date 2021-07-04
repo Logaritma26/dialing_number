@@ -21,9 +21,9 @@ public class Main {
 
         NumberParser parser = new NumberParser(countryCodes, prefixes);
 
-        System.out.println(assertEquals("+442079460056", parser.parsed("02079460056", "+441614960148")));
-        System.out.println(assertEquals("+442079460056", parser.parsed("+442079460056", "+441614960148")));
-        System.out.println(assertEquals("+592079460056", parser.parsed("456782079460056", "+441614960148")));
+        System.out.println(assertEquals("+442079460056", parser.parse3("02079460056", "+441614960148")));
+        System.out.println(assertEquals("+442079460056", parser.parse3("+442079460056", "+441614960148")));
+        System.out.println(assertEquals("+592079460056", parser.parse3("456782079460056", "+591614960148")));
 
     }
 
