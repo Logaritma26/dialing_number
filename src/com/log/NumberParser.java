@@ -17,6 +17,7 @@ public class NumberParser {
     }
 
 
+    // senin methodun
     public String parse(String dialedNumber, String userNumber) {
 
         if (!dialedNumber.contains("+")) {
@@ -42,6 +43,7 @@ public class NumberParser {
         else
             return dialedNumber;
     }
+
 
     public String parsed(String dialedNumber, String userNumber) {
 
